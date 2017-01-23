@@ -1,24 +1,24 @@
 {
-  "name": "paper-swatch-picker",
-  "version": "1.0.2",
-  "description": "A color picker element using all the Material Design colours",
+  "name": "paper-icon-picker",
+  "version": "1.0.0",
+  "description": "A icon picker element using all the Material Design icons",
   "authors": [
-    "The Polymer Authors"
+    "Valentin Hristov <v.hristov@mail.ru>"
   ],
   "keywords": [
     "web-components",
     "polymer",
-    "color",
+    "icon",
     "picker"
   ],
-  "main": "paper-swatch-picker.html",
+  "main": "paper-icon-picker.html",
   "ignore": [],
   "repository": {
     "type": "git",
-    "url": "git://github.com/PolymerElements/paper-swatch-picker.git"
+    "url": "git://github.com/vhr/paper-icon-picker.git"
   },
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/PolymerElements/paper-swatch-picker",
+  "homepage": "https://github.com/vhr/paper-icon-picker",
   "dependencies": {
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",

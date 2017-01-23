@@ -1,39 +1,22 @@
+##&lt;paper-icon-picker&gt;
 
-<!---
-
-This README is automatically generated from the comments in these files:
-paper-swatch-picker.html
-
-Edit those files, and our readme bot will duplicate them over here!
-Edit this file, and the bot will squash your changes :)
-
-The bot does some handling of markdown. Please file a bug if it does the wrong
-thing! https://github.com/PolymerLabs/tedium/issues
-
--->
-
-_[Demo and API docs](https://elements.polymer-project.org/elements/paper-swatch-picker)_
-
-
-##&lt;paper-swatch-picker&gt;
-
-This is a simple color picker element that will allow you to choose one
-of the Material Design colors from a list of available swatches.
+This is a simple icon picker element that will allow you to choose one
+of the Material Design icons from a list of available swatches.
 
 Example:
 
 ```html
-<paper-swatch-picker></paper-swatch-picker>
+<paper-icon-picker></paper-icon-picker>
 
-<paper-swatch-picker color="{{selectedColor}}"></paper-swatch-picker>
+<paper-icon-picker icon="{{selectedIcon}}"></paper-icon-picker>
 ```
 
-You can configure the color palette being used using the `colorList` array and
-the `columnCount` property, which specifies how many "generic" colours (i.e. columns
+You can configure the icon palette being used using the `iconList` array and
+the `columnCount` property, which specifies how many "generic" icons (i.e. columns
 in the picker) you want to display.
 
 ```html
-<paper-swatch-picker column-count=5 color-list='["#65a5f2", "#83be54", "#f0d551", "#e5943c", "#a96ddb"]'></paper-swatch-picker>
+<paper-icon-picker column-count=5 icon-list='["icons:cloud", "icons:face", "icons:work", "icons:pets", "icons:perm-contact-calendar"]'></paper-icon-picker>
 ```
 
 ### Styling
@@ -42,8 +25,5 @@ The following custom properties and mixins are available for styling:
 
 | Custom property | Description | Default |
 | --- | --- | --- |
-| `--paper-swatch-picker-color-size` | The size of each of the color boxes | `20px` |
-| `--paper-swatch-picker-icon-size` | The size of the color picker icon | `24px` |
-| `--paper-swatch-picker-icon` | Mixin applied to the color picker icon | `{}` |
-
-
+| `--paper-icon-picker-icon-size` | The size of each of the icon boxes | `26px` |
+| `--paper-icon-picker-size` | The size of the icon picker | `24px` |
