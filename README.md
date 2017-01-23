@@ -1,6 +1,5 @@
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/vhr/paper-icon-picker)
-
-##&lt;paper-icon-picker&gt;
+## paper-icon-picker
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/vhr/paper-icon-picker) [![GitHub version](https://badge.fury.io/gh/vhr%2Fpaper-icon-picker.svg)](https://badge.fury.io/gh/vhr%2Fpaper-icon-picker) [![Build Status](https://travis-ci.org/vhr/paper-icon-picker.svg?branch=master)](https://travis-ci.org/vhr/paper-icon-picker)
 
 This is a simple icon picker element that will allow you to choose one
 of the Material Design icons from a list of available swatches.
