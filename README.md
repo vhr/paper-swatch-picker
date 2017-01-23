@@ -1,3 +1,5 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/vhr/paper-icon-picker)
+
 ##&lt;paper-icon-picker&gt;
 
 This is a simple icon picker element that will allow you to choose one
