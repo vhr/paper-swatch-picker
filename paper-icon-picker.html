@@ -265,7 +265,11 @@ Custom property | Description | Default
       },
 
       _iconChanged: function() {
-        this.$.iconButton.icon = this.icon;
+        if (this.icon) {
+          this.$.iconButton.icon = this.icon;
+        } else {
+          this.$.iconButton.icon = 'swatch:perm-media';
+        }
       },
     });
   </script>
