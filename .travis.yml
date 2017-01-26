@@ -1,18 +1,16 @@
 language: node_js
+node_js: stable
+dist: trusty
 sudo: required
-before_script:
-  - npm install -g bower polymer
-  - bower install
-  - polymer test
-node_js: '6'
 addons:
   firefox: latest
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
-script:
-  - xvfb-run wct
-  - 'if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct -s ''default''; fi'
-dist: trusty
+    - google-chrome-stable
+before_script:
+- npm install -g bower polylint web-component-tester
+- bower install
+- polylint
+script: xvfb-run wct
