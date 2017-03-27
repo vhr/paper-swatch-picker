@@ -170,16 +170,6 @@ Custom property | Description | Default
         },
 
         /**
-         * Meta iconsets
-         */
-        iconsets: {
-          type: Array,
-          value: function() {
-            return [];
-          }
-        },
-
-        /**
          * The number of icons to display in the picker.
          * the Material Design palette has 18 icons
          */
@@ -224,7 +214,7 @@ Custom property | Description | Default
       },
 
       attached: function() {
-        if (this.iconList.length === 0) {
+        if (this.iconList.length === 0 && this.iconsets && this.iconsets.length) {
           var iconList = [];
           this.iconsets.forEach(function(item){
             item.getIconNames().forEach(function(icon){
