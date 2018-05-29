@@ -14,8 +14,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../iron-list/iron-list.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../iron-meta/iron-meta.html">
+<link rel="import" href="../neon-animation/web-animations.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
 <link rel="import" href="paper-icon-picker-icon.html">
 
 <!--
@@ -63,12 +67,17 @@ Custom property | Description | Default
         box-sizing: border-box;
         width: var(--paper-icon-picker-icon-size, 26px);
         height: var(--paper-icon-picker-icon-size, 26px);
+        color: #888888;
         display: inline-block;
         padding: 0;
         margin: 0;
         cursor: pointer;
         font-size: 0;
         position: relative;
+      }
+      .icon iron-icon {
+        width: var(--paper-icon-picker-icon-size, 26px);
+        height: var(--paper-icon-picker-icon-size, 26px);
       }
 
       /* If we just scale the paper-item when hovering, this will end up
@@ -82,11 +91,15 @@ Custom property | Description | Default
         z-index: 0;
       }
 
-      .icon:hover:after, .icon:focus:after {
-        -webkit-transform: scale(1.3, 1.3);
-        transform: scale(1.3, 1.3);
+      .icon:hover, .icon:focus {
+        -webkit-transform: scale(1.8, 1.8);
+        transform: scale(1.8, 1.8);
         outline: none;
         z-index: 1;
+        background-color: #FFFFFF;
+        border-radius: 0;
+        border: 1px solid #888888;
+        color: orange !important;
       }
 
       paper-item {
@@ -102,43 +115,109 @@ Custom property | Description | Default
       }
 
       paper-listbox {
-        padding: 0;
+        margin: 8px;
         font-size: 0;
-        overflow: hidden;
         @apply(--layout-vertical);
         @apply(--layout-wrap);
       }
+      paper-tooltip {
+        z-index: 1;
+      }
+      .icon-group-1 {
+        color: var(--paper-pink-700);
+      }
+      .icon-group-2 {
+        color: var(--google-green-700);
+      }
+      .icon-group-3 {
+        color: var(--google-blue-700);
+      }
+      .icon-group-4 {
+        color: var(--paper-grey-700);
+      }
+      .icon-group-5 {
+        color: var(--paper-pink-700);
+      }
+      .icon-group-6 {
+        color: var(--google-green-700);
+      }
+      .icon-group-7 {
+        color: var(--google-blue-700);
+      }
+      .icon-group-8 {
+        color: var(--paper-grey-700);
+      }
+      .icon-group-9 {
+        color: var(--paper-pink-700);
+      }
+      .icon-group-10 {
+        color: var(--google-green-700);
+      }
+      .icon-group-11 {
+        color: var(--google-blue-700);
+      }
+      .icon-group-12 {
+        color: var(--paper-grey-700);
+      }
+      .icon-group-13 {
+        color: var(--paper-pink-700);
+      }
+      .icon-group-14 {
+        color: var(--google-green-700);
+      }
+      .icon-group-15 {
+        color: var(--google-blue-700);
+      }
+      .icon-group-16 {
+        color: var(--paper-grey-700);
+      }
+      .icon-group-17 {
+        color: var(--paper-pink-700);
+      }
+      .icon-group-18 {
+        color: var(--google-green-700);
+      }
+      .icon-group-19 {
+        color: var(--google-blue-700);
+      }
     </style>
 
-    <iron-meta type="iconset" list="{{iconsets}}"></iron-meta>
-    <paper-menu-button vertical-align="[[verticalAlign]]" horizontal-align="[[horizontalAlign]]">
+    <paper-menu-button
+      id="iconpicker"
+      vertical-align="[[verticalAlign]]"
+      horizontal-align="[[horizontalAlign]]"
+      opened="{{opened}}">
       <paper-icon-button
-          id="iconButton"
-          icon="swatch:perm-media"
-          class="dropdown-trigger" alt="icon picker"
-          noink$="[[noink]]">
+        id="iconButton"
+        icon="swatch:perm-media"
+        class="dropdown-trigger" alt="icon picker"
+        noink$="[[noink]]"
+        slot="dropdown-trigger">
       </paper-icon-button>
-      <paper-listbox class="dropdown-content" id="container">
-        <template is="dom-repeat" items="{{iconList}}">
-          <paper-item class="icon">
-            <iron-icon icon="[[item]]"></iron-icon>
-          </paper-item>
-        </template>
-      </paper-listbox>
+      <iron-list grid items="[[renderIconList]]" id="container" slot="dropdown-content">
+      <template>
+        <paper-item class$="icon-group-[[item.index]] icon" value="[[item.icon]]">
+          <iron-icon icon="[[item.icon]]"></iron-icon>
+        </paper-item>
+      </template>
+      </iron-list>
     </paper-menu-button>
+    <paper-tooltip
+      for="iconpicker"
+      position="bottom"
+      offset="14">
+      [[iconText]]
+    </paper-tooltip>
+    <iron-a11y-keys target="[[iconpicker]]" keys="escape" on-keys-pressed="close" stop-keyboard-event-propagation></iron-a11y-keys>
   </template>
 
   <script>
     Polymer({
       is: 'paper-icon-picker',
 
-      hostAttributes: {
-        'tabindex': 0
-      },
-
       listeners: {
-        'paper-dropdown-open': '_onOpen',
-        'iron-select': '_onIconTap'
+        'iconpicker.tap': '_onOpen',
+        'container.tap': '_onIconTap'
       },
 
       /**
@@ -149,6 +228,12 @@ Custom property | Description | Default
 
       properties: {
         /**
+         * opened state
+         */
+        opened: {
+          type: Boolean,
+        },
+        /**
          * The selected icon, as string (i.e. 'icons:add-box').
          * value.
          */
@@ -157,27 +242,48 @@ Custom property | Description | Default
           notify: true,
           observer: '_iconChanged'
         },
-
+        /**
+         * icon text off of icon
+         */
+        iconText: {
+          type: String,
+          computed: '_computedIconText(icon)',
+        },
         /**
          * The icons to be displayed. By default, these are the Material Design
          * icons.
          */
         iconList: {
           type: Array,
+          notify: true,
           value: function() {
             return [];
           }
         },
-
+        /**
+         * Build a list of icons to render based on
+         * what has been found.
+         */
+        renderIconList: {
+          type: Array,
+          computed: '_computeRenderIconList(iconList)',
+        },
         /**
          * The number of icons to display in the picker.
          * the Material Design palette has 18 icons
          */
         columnCount: {
           type: Number,
-          value: 18
+          value: 8,
         },
-
+        /**
+         * max rows to display to increase performance of large lists
+         * of icons being loaded
+         */
+        maxRows: {
+          type: Number,
+          value: 6,
+        },
         /**
          * The orientation against which to align the menu dropdown
          * horizontally relative to the dropdown trigger.
@@ -204,21 +310,76 @@ Custom property | Description | Default
          */
         noink: {
           type: Boolean
-        }
+        },
       },
-
+      /**
+       * on open event
+       */
+      _onOpen: function(e) {
+        setTimeout( () => {
+          this.$$('paper-item').focus();
+        }, 500);
+      },
+      /**
+       * Close list.
+       */
+      close: function() {
+        this.opened = false;
+      },
+      /**
+       * List that we will output to the screen
+       */
+      _computeRenderIconList: function(list) {
+        var renderList = [];
+        var item = {};
+        for (var i in list) {
+          item = {};
+          if (typeof list[i].icon === typeof undefined) {
+            item.icon = list[i];
+          }
+          else {
+            item.icon = list[i].icon;
+          }
+          if (typeof list[i].index === typeof undefined) {
+            item.index = 0;
+          }
+          else {
+            item.index = list[i].index;
+          }
+          renderList.push(item);
+        }
+        return renderList;
+      },
+      /**
+       * Icon text from icon selected
+       */
+      _computedIconText: function(icon) {
+        if (icon == '') {
+          return 'Select an icon';
+        }
+        return icon;
+      },
       created: function() {
         // Note: we won't actually render these icon boxes unless the menu is
         // actually tapped.
         this._renderedIcons = false;
       },
-
+      /**
+       * Attached life cycle
+       */
       attached: function() {
-        if (this.iconList.length === 0 && this.iconsets && this.iconsets.length) {
+        // need to access iconset imperatively now
+        const iconSets = new Polymer.IronMeta({type: 'iconset'});
+        if (this.iconList.length === 0 && iconSets.list && iconSets.list.length) {
           var iconList = [];
-          this.iconsets.forEach(function(item){
-            item.getIconNames().forEach(function(icon){
-              iconList.push(icon);
+          var index = 0;
+          iconSets.list.forEach(function(item){
+            index++;
+            item.getIconNames().forEach((icon) => {
+              iconList.push({
+                "icon": icon,
+                "index": index,
+              });
             });
           });
           this.set('iconList', iconList);
@@ -233,18 +394,13 @@ Custom property | Description | Default
           sizeOfAIconDiv = sizeOfAIconDiv.replace('px', '');
         }
 
-        var rowCount = Math.round(this.iconList.length / this.columnCount);
+        var rowCount = Math.round(this.iconList.length / this.columnCount) + 1;
+        // ensure that we don't go beyond 100 shown if this is an insane list
+        if (rowCount > this.maxRows) {
+          rowCount = this.maxRows;
+        }
         this.$.container.style.height = rowCount * sizeOfAIconDiv + 'px';
         this.$.container.style.width = this.columnCount * sizeOfAIconDiv + 'px';
-      },
-
-      _onOpen: function() {
-        // Fill in the icons if we haven't already.
-        if (this._renderedIcons) {
-          return;
-        }
-
-        this._renderedIcons = true;
       },
 
       _addOverflowClass: function() {
@@ -255,13 +411,12 @@ Custom property | Description | Default
         this.$.container.toggleClass('opened', false);
       },
 
-      _onIconTap: function(event) {
-        var item = event.detail.item;
-        var icon = item.querySelector('iron-icon').icon;
-
-        // If it's in rgb format, convert it first.
-        this.icon = icon;
+      _onIconTap: function(e) {
+        var normalizedEvent = Polymer.dom(e);
+        var local = normalizedEvent.localTarget;
+        this.icon = local.value;
         this.fire('icon-picker-selected', {icon: this.icon});
+        this.$.container.fire('iron-select', this.icon);
       },
 
       _iconChanged: function() {
